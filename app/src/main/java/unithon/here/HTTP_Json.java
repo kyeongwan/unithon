@@ -36,11 +36,15 @@ import android.util.Log;
 
 public class HTTP_Json extends AsyncTask<JSONObject, String, String> {
 
-	final static String ServerIP = "http://unition.herokuapp.com/find";
+	private String ServerIP;
 	private String data;
 
 	HTTP_Json() {
 
+	}
+
+	public void setServerURL(String url){
+		this.ServerIP = url;
 	}
 
 	public String SendJsonMsg(JSONObject jObj) {

@@ -1,5 +1,6 @@
 package unithon.here;
 
+import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -40,6 +41,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+//        ActionBar actionBar = getActionBar();
+//        actionBar.hide();
+
         registBroadcastReceiver();
         Init();
         getInstanceIdToken();
@@ -102,6 +107,12 @@ public class SplashActivity extends AppCompatActivity {
                 } else if (action.equals(QuickstartPreferences.REGISTRATION_COMPLETE)) {
                     // 액션이 COMPLETE일 경우
                     String token = intent.getStringExtra("token");
+
+                    SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("gcmtoken", token);
+                    editor.commit();
+
                     Log.e("token", token);
                 }
             }
