@@ -2,6 +2,7 @@ package unithon.here;
 
 import org.json.JSONObject;
 
+
 import android.os.AsyncTask;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,11 +36,15 @@ import android.util.Log;
 
 public class HTTP_Json extends AsyncTask<JSONObject, String, String> {
 
-	final static String ServerIP = "http://unition.herokuapp.com/find";
+	private String ServerIP;
 	private String data;
 
 	HTTP_Json() {
 
+	}
+
+	public void setServerURL(String url){
+		this.ServerIP = url;
 	}
 
 	public String SendJsonMsg(JSONObject jObj) {
