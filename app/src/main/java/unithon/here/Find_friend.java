@@ -86,14 +86,14 @@ public class Find_friend extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			// TODO Auto-generated method stub
-			//DB insert
-			DBManager dbManager = new DBManager();
-			String number1 = edit_number.getText().toString();
-			SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-			String name = pref.getString("name", null);
 
-			String sql = "insert into (phoneNumber,username) values ("+number1+","+name+")";
-			dbManager.write(sql);
+			//DB insert
+
+			Toast.makeText(getApplicationContext(), adapter.getItem(arg2).getTag() + "" + edit_number.getText(), Toast.LENGTH_SHORT).show();
+			String query = String.format("INSERT INTO app_info (phoneNumber, userName) VALUES ('%s', '%s')", adapter.getItem(arg2).getTag(), edit_number.getText());
+			DBManager.getInstance().write(query);
+
+
 
 			adapter.remove(adapter.getItem(arg2));
 			m_ListView.setAdapter(adapter);
@@ -128,6 +128,10 @@ public class Find_friend extends Activity {
 		public SampleItem(String tag, int iconRes) {
 			this.tag = tag;
 			this.iconRes = iconRes;
+		}
+
+		public String getTag(){
+			return tag;
 		}
 	}
 
