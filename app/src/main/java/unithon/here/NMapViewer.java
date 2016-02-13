@@ -177,6 +177,8 @@ public class NMapViewer extends NMapActivity {
 
 		startMyLocation();
 
+		testPOIdataOverlay();
+
 		btn_send = (Button)findViewById(R.id.btn_send);
 
 		btn_send.setOnClickListener(new View.OnClickListener() {
@@ -319,6 +321,7 @@ public class NMapViewer extends NMapActivity {
 
 					mMapView.setAutoRotateEnabled(true, false);
 
+
 					mMapContainerView.requestLayout();
 				} else {
 					stopMyLocation();
@@ -409,37 +412,45 @@ public class NMapViewer extends NMapActivity {
 		}
 	}
 
-	private void testPathPOIdataOverlay() {
-
-		// set POI data
-		NMapPOIdata poiData = new NMapPOIdata(4, mMapViewerResourceProvider, true);
-		poiData.beginPOIdata(4);
-		poiData.addPOIitem(349652983, 149297368, "Pizza 124-456", NMapPOIflagType.FROM, null);
-		poiData.addPOIitem(349652966, 149296906, null, NMapPOIflagType.NUMBER_BASE + 1, null);
-		poiData.addPOIitem(349651062, 149296913, null, NMapPOIflagType.NUMBER_BASE + 999, null);
-		poiData.addPOIitem(349651376, 149297750, "Pizza 000-999", NMapPOIflagType.TO, null);
-		poiData.endPOIdata();
-
-		// create POI data overlay
-		NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
-
-		// set event listener to the overlay
-		poiDataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
-
-	}
+//	private void testPathPOIdataOverlay() {
+//		//쪽지 위치 표시
+//		// set POI data
+//		NMapPOIdata poiData = new NMapPOIdata(4, mMapViewerResourceProvider, true);
+//		poiData.beginPOIdata(4);
+//		poiData.addPOIitem(349652983, 149297368, "Pizza 124-456", NMapPOIflagType.FROM, null);
+//		poiData.addPOIitem(349652966, 149296906, null, NMapPOIflagType.NUMBER_BASE + 1, null);
+//		poiData.addPOIitem(349651062, 149296913, null, NMapPOIflagType.NUMBER_BASE + 999, null);
+//		poiData.addPOIitem(349651376, 149297750, "Pizza 000-999", NMapPOIflagType.TO, null);
+//		poiData.endPOIdata();
+//
+//		// create POI data overlay
+//		NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
+//
+//		// set event listener to the overlay
+//		poiDataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
+//
+//	}
 
 	private void testPOIdataOverlay() {
 
 		// Markers for POI item
 		int markerId = NMapPOIflagType.PIN;
+		
 
 		// set POI data
-		NMapPOIdata poiData = new NMapPOIdata(2, mMapViewerResourceProvider);
-		poiData.beginPOIdata(2);
-		NMapPOIitem item = poiData.addPOIitem(127.0630205, 37.5091300, "Pizza 777-111", markerId, 0);
+		NMapPOIdata poiData = new NMapPOIdata(3, mMapViewerResourceProvider);
+		poiData.beginPOIdata(3);
+		NMapPOIitem item = poiData.addPOIitem(127.0630205, 37.5091300, "Pizza1 777-111", markerId, 0);
 		item.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
-		poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
+		NMapPOIitem item2 = poiData.addPOIitem(127.0430205, 37.6095300, "Pizza2 123-456", markerId, 0);
+		item2.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
+		NMapPOIitem item3 = poiData.addPOIitem(127.0230205, 37.7095300, "Pizza3", markerId, 0);
+		item3.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
 		poiData.endPOIdata();
+
+
+
+
 
 		// create POI data overlay
 		NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
@@ -518,6 +529,11 @@ public class NMapViewer extends NMapActivity {
 
 	};
 
+
+	double current_latitude = 0.0;
+	double current_longitude = 0.0;
+
+
 	/* MyLocation Listener */
 	private final NMapLocationManager.OnLocationChangeListener onMyLocationChangeListener = new NMapLocationManager.OnLocationChangeListener() {
 
@@ -528,8 +544,11 @@ public class NMapViewer extends NMapActivity {
 				mMapController.animateTo(myLocation);
 
 
+				current_latitude = myLocation.getLatitude();
+				current_longitude = myLocation.getLongitude();
+
 				//현재 위치로 이동할 때 같이 출력해주기
-				//Toast.makeText(NMapViewer.this, "현재 위치로 이동: 위도:" + myLocation.getLatitude() + ",경도 " + myLocation.getLongitude(), Toast.LENGTH_LONG).show();
+	//			Toast.makeText(NMapViewer.this, "현재 위치로 이동: 위도:" + myLocation.getLatitude() + ",경도 " + myLocation.getLongitude(), Toast.LENGTH_LONG).show();
 			}
 
 			return true;
@@ -668,6 +687,7 @@ public class NMapViewer extends NMapActivity {
 
 			// [[TEMP]] handle a click event of the callout
 			Toast.makeText(NMapViewer.this, "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
+			//메시지 보기
 		}
 
 		@Override
@@ -789,10 +809,10 @@ public class NMapViewer extends NMapActivity {
 		boolean trafficMode = mPreferences.getBoolean(KEY_TRAFFIC_MODE, NMAP_TRAFFIC_MODE_DEFAULT);
 		boolean bicycleMode = mPreferences.getBoolean(KEY_BICYCLE_MODE, NMAP_BICYCLE_MODE_DEFAULT);
 
-		mMapController.setMapViewMode(viewMode);
-		mMapController.setMapViewTrafficMode(trafficMode);
-		mMapController.setMapViewBicycleMode(bicycleMode);
-		mMapController.setMapCenter(new NGeoPoint(longitudeE6, latitudeE6), level);
+//		mMapController.setMapViewMode(viewMode);
+//		mMapController.setMapViewTrafficMode(trafficMode);
+//		mMapController.setMapViewBicycleMode(bicycleMode);
+//		mMapController.setMapCenter(new NGeoPoint(longitudeE6, latitudeE6), level);
 
 		if (mIsMapEnlared) {
 			mMapView.setScalingFactor(2.0F);
@@ -1004,7 +1024,7 @@ public class NMapViewer extends NMapActivity {
 				testPathDataOverlay();
 
 				// add path POI data overlay
-				testPathPOIdataOverlay();
+	//			testPathPOIdataOverlay();
 				return true;
 
 			case MENU_ITEM_TEST_FLOATING_DATA:
