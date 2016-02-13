@@ -1,68 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#A0D35E">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@drawable/searchgreen"
+        android:id="@+id/greenbar"
+        android:padding="10dp"
+        android:layout_alignParentTop="true">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_margin="10dp">
-
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="33"
-                android:background="@mipmap/back"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="33"
-                android:text="서민아" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="33"
-                android:background="@mipmap/trash"/>
-        </LinearLayout>
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="17dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/back"/>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/response_layout"
-            android:layout_weight="0.3"
-            >
+            android:id="@+id/sender_name"
+            android:layout_centerHorizontal="true"
+            android:text="서민아"
+            android:textSize="30dp"
+            android:textColor="#FFFFFFFF"
+            android:textAlignment="center"/>
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:id="@+id/editText"
-                android:layout_weight="0.57" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/date"
+            android:text="어제"
+            android:textSize="20dp"
+            android:textColor="#FFFFFFFF"
+            android:textAlignment="center"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/sendicon"
-                android:id="@+id/btn_send"
-                android:layout_margin="2dp" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/trash"/>
+    </RelativeLayout>
 
-        </LinearLayout>
+    <TextView
+        android:layout_width="356dp"
+        android:layout_height="391dp"
+        android:background="#FFFFFFFF"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/greenbar"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_alignParentBottom="true" >
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/editText"
+            android:layout_weight="0.57" />
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sendicon"
+            android:id="@+id/btn_send"
+            android:layout_margin="2dp" />
 
     </LinearLayout>
-
-
-</LinearLayout>
+    
+    </RelativeLayout>
