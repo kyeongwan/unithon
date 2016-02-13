@@ -190,6 +190,19 @@ public class NMapViewer extends NMapActivity {
 		}
 		return jObj;
 	}
+
+	public void button_alarm(View v){
+//		Intent intent = new Intent();
+//		startActivity(intent);
+	}
+
+	public void button_plus(View v){
+		Intent intent = new Intent(this,Find_friend.class);
+		startActivity(intent);
+	}
+
+
+
 	@Override
 	protected void onStart() {
 		super.onStart();
