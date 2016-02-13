@@ -35,7 +35,8 @@ public class DBManager extends SQLiteOpenHelper {
                 "lat double, " +
                 "message TEXT, " +
                 "to TEXT, " +
-                "from TEXT);";
+                "from TEXT," +
+                "flag int);";
 
         db.execSQL(sql);
 

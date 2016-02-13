@@ -23,6 +23,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 
 import unithon.here.Service.RegistrationIntentService;
+import unithon.here.Util.DBManager;
 import unithon.here.model.QuickstartPreferences;
 
 public class SplashActivity extends AppCompatActivity {
@@ -56,6 +57,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent(SplashActivity.this, SigninActivity.class);
+                new DBManager(getApplicationContext(), "Here.db", null, 1);
                 startActivity(intent);
                 finish();
 
