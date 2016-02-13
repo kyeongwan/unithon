@@ -35,6 +35,32 @@
                 android:background="@mipmap/trash"/>
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/response_layout"
+            android:layout_weight="0.3"
+            >
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/editText"
+                android:layout_weight="0.57" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sendicon"
+                android:id="@+id/btn_send"
+                android:layout_margin="2dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

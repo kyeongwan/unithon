@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         //로그인 시도
         String login = login(mphoneNum,mtoken,maccessToken,null,"http://unition.herokuapp.com/login");
 
+
         if(login.equals("Fail")){
             //이름 입력 창
 

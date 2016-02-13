@@ -7,7 +7,9 @@
 
 package unithon.here;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -15,6 +17,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
@@ -25,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -50,9 +54,13 @@ import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
 import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
 import com.nhn.android.mapviewer.overlay.NMapPathDataOverlay;
+import com.nhn.android.naverlogin.OAuthLogin;
+import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * Sample class for map viewer library.
@@ -98,6 +106,10 @@ public class NMapViewer extends NMapActivity {
 	private NMapPOIitem mFloatingPOIitem;
 
 
+	private OAuthLoginButton mOAuthLoginButton;
+	String mphoneNum;
+	String maccessToken;
+	String mtoken;
 	Button btn_send;
 	private static boolean USE_XML_LAYOUT = true;
 
@@ -177,6 +189,38 @@ public class NMapViewer extends NMapActivity {
 				HTTP_Json json = new HTTP_Json();
 			}
 		});
+
+		TelephonyManager telManager = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+		mphoneNum = telManager.getLine1Number();
+		maccessToken = OAuthLogin.getInstance().getAccessToken(this.getApplicationContext());
+		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+		mtoken = pref.getString("gcmtoken", null);
+
+
+		//로그인 시도
+		String login = login(mphoneNum,mtoken,maccessToken,null,"http://unition.herokuapp.com/login");
+
+
+		if(login.equals("Fail")){
+			//이름 입력 창
+
+			AlertDialog.Builder alert = new AlertDialog.Builder(this);
+			alert.setTitle("설정");
+			alert.setMessage("이름을 입력해주세요.");
+
+			// Set an EditText view to get user input
+			final EditText input = new EditText(this);
+			alert.setView(input);
+			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					String value = input.getText().toString();
+					login(mphoneNum,mtoken,maccessToken,value,"http://unition.herokuapp.com/user");
+					// Do something with value!
+				}
+			});
+			alert.show();
+
+		}
 	}
 	public JSONObject sendMsg_Json(double lati, double longi, String msg) {
 
@@ -190,7 +234,34 @@ public class NMapViewer extends NMapActivity {
 		}
 		return jObj;
 	}
+	public String login(String phoneNum,String gcmtoken,String NaccessToken, String name, String url){
+		HTTP_Json json = new HTTP_Json();
+		json.setServerURL(url);
+		json.execute(fisrt_login_Json(phoneNum,gcmtoken,NaccessToken,name ));
+		String request = null;
+		try {
+			request = json.get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		return request;
+	}
 
+	public JSONObject fisrt_login_Json(String phoneNum,String gcmtoken,String naveraccessToken, String name) {
+
+		JSONObject jObj = new JSONObject();
+		try {
+			jObj.put("phoneNumber", phoneNum);
+			jObj.put("gcmReg", gcmtoken);
+			jObj.put("nToken", naveraccessToken);
+			jObj.put("userName", name);
+		} catch (JSONException e1) {
+			e1.printStackTrace();
+		}
+		return jObj;
+	}
 	public void button_alarm(View v){
 //		Intent intent = new Intent();
 //		startActivity(intent);

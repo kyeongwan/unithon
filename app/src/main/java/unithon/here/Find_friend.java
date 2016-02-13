@@ -26,7 +26,7 @@ public class Find_friend extends Activity {
 	EditText edit_number;
 	SampleAdapter adapter;
 	ListView m_ListView;
-
+	ImageView image;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,14 +36,16 @@ public class Find_friend extends Activity {
 		edit_number = (EditText) findViewById(R.id.edit_phonenumber);
 		adapter = new SampleAdapter(getApplication());
 		m_ListView = (ListView) findViewById(R.id.list_friend);
+		image =(ImageView)this.findViewById(R.id.no_find);
 
 		btn_find_friend.setOnClickListener(new View.OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				image.setImageResource(android.R.color.transparent);
 				String number = edit_number.getText().toString();
 				HTTP_Json json = new HTTP_Json();
+				json.setServerURL("http://unition.herokuapp.com/find");
 				json.execute(findFriend_Json(number));
 				// String request = json.findFriend_Json(number);
 				String request = null;
@@ -57,7 +59,7 @@ public class Find_friend extends Activity {
 					e.printStackTrace();
 				}
 				if (request.equals("False")) {
-					Toast.makeText(getApplicationContext(), "친구 찾기 실패!", Toast.LENGTH_SHORT).show();
+					image.setImageResource(R.drawable.no_find);
 				} else {
 					adapter.add(new SampleItem(request, android.R.drawable.ic_menu_search));
 					m_ListView.setAdapter(adapter);
