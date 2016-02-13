@@ -102,6 +102,12 @@ public class SplashActivity extends AppCompatActivity {
                 } else if (action.equals(QuickstartPreferences.REGISTRATION_COMPLETE)) {
                     // 액션이 COMPLETE일 경우
                     String token = intent.getStringExtra("token");
+
+                    SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("gcmtoken", token);
+                    editor.commit();
+
                     Log.e("token", token);
                 }
             }
