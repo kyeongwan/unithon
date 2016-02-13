@@ -473,8 +473,6 @@ public class NMapViewer extends NMapActivity {
 
 
 
-
-
 		// create POI data overlay
 		NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
 
@@ -711,6 +709,7 @@ public class NMapViewer extends NMapActivity {
 			// [[TEMP]] handle a click event of the callout
 			Toast.makeText(NMapViewer.this, "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
 			//메시지 보기
+			
 		}
 
 		@Override
