@@ -1,5 +1,6 @@
 package unithon.here;
 
+import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -40,6 +41,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+//        ActionBar actionBar = getActionBar();
+//        actionBar.hide();
+
         registBroadcastReceiver();
         Init();
         getInstanceIdToken();

@@ -74,7 +74,7 @@ public class SigninActivity extends Activity{
 
 
     private void nextActivity(){
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, NMapViewer.class));
     }
 
 

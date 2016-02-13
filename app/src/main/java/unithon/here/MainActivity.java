@@ -97,8 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        Button button = (Button)findViewById(R.id.btn_logout);
-
         setSupportActionBar(toolbar);
         // 주석
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
