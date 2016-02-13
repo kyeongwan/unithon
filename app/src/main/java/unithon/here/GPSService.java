@@ -80,7 +80,7 @@ public class GPSService extends Service {
 			((Globals) getApplication()).setLongitude(longitude);
 			Log.i("INFO", "현재 위치:" + latitude + "," + longitude);
 
-			Toast.makeText(getApplicationContext(), "현재 위치:" + latitude + "," + longitude, Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "현재 위치:" + latitude + "," + longitude, Toast.LENGTH_SHORT).show();
 		}
 
 		@Override

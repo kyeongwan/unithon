@@ -111,6 +111,7 @@ public class NMapViewer extends NMapActivity {
 	String maccessToken;
 	String mtoken;
 	Button btn_send;
+	EditText edit_msg;
 	private static boolean USE_XML_LAYOUT = true;
 
 	/** Called when the activity is first created. */
@@ -180,6 +181,7 @@ public class NMapViewer extends NMapActivity {
 		testPOIdataOverlay();
 
 		btn_send = (Button)findViewById(R.id.btn_send);
+		edit_msg = (EditText)findViewById(R.id.edit_msg);
 
 		btn_send.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -187,8 +189,14 @@ public class NMapViewer extends NMapActivity {
 				double latitude = ((Globals) getApplication()).getLatitude();
 				double longitude = ((Globals) getApplication()).getLongitude();
 
+
+
+				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+				String name = pref.getString("name", null);
+				String number = "+821041880956";
+				String msg = edit_msg.getText().toString();
 				// 결과 값.
-				HTTP_Json json = new HTTP_Json();
+				sendMessage(number,longitude,latitude,name,msg);
 			}
 		});
 
@@ -216,6 +224,11 @@ public class NMapViewer extends NMapActivity {
 			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					String value = input.getText().toString();
+					SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+					SharedPreferences.Editor editor = pref.edit();
+					editor.putString("name", value);
+					editor.commit();
+
 					login(mphoneNum,mtoken,maccessToken,value,"http://unition.herokuapp.com/user");
 					// Do something with value!
 				}
@@ -224,13 +237,23 @@ public class NMapViewer extends NMapActivity {
 
 		}
 	}
-	public JSONObject sendMsg_Json(double lati, double longi, String msg) {
+
+	public void sendMessage(String number,double longitude,double latitude,String name,String msg){
+		HTTP_Json json =  new HTTP_Json();
+		json.setServerURL("http://unition.herokuapp.com/sendMessage");
+		json.execute(sendMsg_Json( number, longitude, latitude, name, msg));
+
+	}
+
+	public JSONObject sendMsg_Json(String number,double longitude,double latitude,String name,String msg) {
 
 		JSONObject jObj = new JSONObject();
 		try {
-			jObj.put("latitude", lati);
-			jObj.put("longitude", longi);
-			jObj.put("msg", msg);
+			jObj.put("phoneNumber",number);
+			jObj.put("Iot",longitude);
+			jObj.put("Iat", latitude);
+			jObj.put("to", name);
+			jObj.put("message", msg);
 		} catch (JSONException e1) {
 			e1.printStackTrace();
 		}
