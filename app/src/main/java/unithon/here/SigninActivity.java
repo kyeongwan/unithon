@@ -6,6 +6,7 @@ package unithon.here;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -71,6 +72,10 @@ public class SigninActivity extends Activity{
     }
 
 
+    private void nextActivity(){
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
 
     @Override
     protected void onResume() {
@@ -82,20 +87,10 @@ public class SigninActivity extends Activity{
     /**
      * startOAuthLoginActivity() 호출시 인자로 넘기거나, OAuthLoginButton 에 등록해주면 인증이 종료되는 걸 알 수 있다.
      */
-    static private OAuthLoginHandler mOAuthLoginHandler = new OAuthLoginHandler() {
+    private OAuthLoginHandler mOAuthLoginHandler = new OAuthLoginHandler() {
         @Override
         public void run(boolean success) {
-            if (success) {
-                String accessToken = mOAuthLoginInstance.getAccessToken(mContext);
-                String refreshToken = mOAuthLoginInstance.getRefreshToken(mContext);
-                long expiresAt = mOAuthLoginInstance.getExpiresAt(mContext);
-                String tokenType = mOAuthLoginInstance.getTokenType(mContext);
-
-            } else {
-                String errorCode = mOAuthLoginInstance.getLastErrorCode(mContext).getCode();
-                String errorDesc = mOAuthLoginInstance.getLastErrorDesc(mContext);
-                Toast.makeText(mContext, "errorCode:" + errorCode + ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT).show();
-            }
+            nextActivity();
         };
     };
 
