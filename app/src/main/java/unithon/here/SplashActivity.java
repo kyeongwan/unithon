@@ -55,7 +55,6 @@ public class SplashActivity extends AppCompatActivity {
         hd.postDelayed(new Runnable() {
             @Override
             public void run() {
-                SharedPreferences pref = getSharedPreferences("app", MODE_PRIVATE);
                 Intent intent = new Intent(SplashActivity.this, SigninActivity.class);
                 startActivity(intent);
                 finish();
