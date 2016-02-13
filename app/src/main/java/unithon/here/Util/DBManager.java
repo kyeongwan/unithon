@@ -15,9 +15,9 @@ public class DBManager extends SQLiteOpenHelper {
         g_this = this;
     }
 
-    public static DBManager getInstance() {
+    public static DBManager getInstance(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         if(g_this == null)
-            Log.e("DBManager", "Instance NULL");
+            g_this = new DBManager(context, name, factory, version);
         return g_this;
     }
 
@@ -25,17 +25,17 @@ public class DBManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String sql = "CREATE TABLE IF NOT EXISTS friend(" +
-                        "phoneNumber TEXT UNIQUE, " +
+                        "phoneNumber TEXT, " +
                         "username TEXT);";
         db.execSQL(sql);
 
         sql = "CREATE TABLE IF NOT EXISTS chat_info(" +
-                "phoneNumber TEXT UNIQUE, " +
+                "phoneNumber TEXT, " +
                 "lot double, " +
                 "lat double, " +
                 "message TEXT, " +
-                "to TEXT, " +
-                "from TEXT);";
+                "toUser TEXT, " +
+                "fromUser TEXT);";
 
         db.execSQL(sql);
 
