@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Here</string>
-    <string name="action_settings">Settings</string>
+    <string name="str_done">완료</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">친구 찾기</string>
+    <string name="title_activity_gpsservice">GPSService</string>
+    <string name="title_activity_find_friend">친구 검색</string>
 </resources>

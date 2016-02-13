@@ -1,7 +1,9 @@
 package unithon.here;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +55,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        String accessToken = OAuthLogin.getInstance().getAccessToken(this.getApplicationContext());
+
+        //로그인 시도
+        boolean login = login(accessToken);
+
+        if(login == false){
+            //이름 입력 창
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("설정");
+            alert.setMessage("이름을 입력해주세요.");
+
+            // Set an EditText view to get user input
+            final EditText input = new EditText(this);
+            alert.setView(input);
+            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    String value = input.getText().toString();
+                    value.toString();
+                    // Do something with value!
+                }
+            });
+            alert.show();
+
+        }
+
         setSupportActionBar(toolbar);
         // 주석
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -61,8 +92,18 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        //로그아웃
+      //  OAuthLogin.getInstance().logout(getApplicationContext());
+
     }
 
+    public boolean login(String token){
+
+
+
+        return false;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
