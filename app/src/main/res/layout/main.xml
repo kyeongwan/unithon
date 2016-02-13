@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_layout"
         android:id="@+id/map_layout"
-        android:layout_weight="0.75"
+        android:layout_weight="9"
         >
 
 
@@ -76,22 +76,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/map_layout"
-        android:layout_weight="0.3"
-        >
+        android:layout_weight="1"
+        android:layout_margin="1dp">
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/editText"
-            android:layout_weight="0.57" />
+            android:layout_weight="0.57"
+            android:layout_gravity="bottom"
+            android:hint="이 위치에서 편지쓰기" />
 
         <Button
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="22dp"
+            android:layout_height="20dp"
             android:background="@drawable/sendicon"
             android:id="@+id/btn_send"
-            android:layout_margin="2dp" />
-
+            android:layout_margin="5dp" />
 
     </LinearLayout>
 
