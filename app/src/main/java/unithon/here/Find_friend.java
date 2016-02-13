@@ -2,6 +2,7 @@ package unithon.here;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
+
+import unithon.here.Util.DBManager;
 
 public class Find_friend extends Activity {
 	Button btn_find_friend;
@@ -61,6 +64,15 @@ public class Find_friend extends Activity {
 				if (request.equals("False")) {
 					image.setImageResource(R.drawable.no_find);
 				} else {
+				//	HTTP_Json json1 = new HTTP_Json();
+				//	json1.setServerURL("http://unition.herokuapp.com/add");
+				//	String number1 = edit_number.getText().toString();
+
+				//	SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+				//	String name = pref.getString("name", null);
+
+				//	json1.execute(addFriend(number1,name));
+
 					adapter.add(new SampleItem(request, android.R.drawable.ic_menu_search));
 					m_ListView.setAdapter(adapter);
 				}
@@ -74,10 +86,30 @@ public class Find_friend extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			// TODO Auto-generated method stub
+			//DB insert
+			DBManager dbManager = new DBManager();
+			String number1 = edit_number.getText().toString();
+			SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+			String name = pref.getString("name", null);
+
+			String sql = "insert into (phoneNumber,username) values ("+number1+","+name+")";
+			dbManager.write(sql);
+
 			adapter.remove(adapter.getItem(arg2));
 			m_ListView.setAdapter(adapter);
 		}
 	};
+
+	public JSONObject addFriend(String number, String name) {
+		JSONObject jObj = new JSONObject();
+		try {
+			jObj.put("phoneNumber", number);
+			jObj.put("userName", name);
+		} catch (JSONException e1) {
+			e1.printStackTrace();
+		}
+		return jObj;
+	}
 
 	public JSONObject findFriend_Json(String number) {
 		JSONObject jObj = new JSONObject();

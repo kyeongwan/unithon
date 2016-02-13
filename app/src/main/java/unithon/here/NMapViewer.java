@@ -178,6 +178,9 @@ public class NMapViewer extends NMapActivity {
 
 		startMyLocation();
 
+		Intent intent = new Intent(this, GPSService.class);
+		startService(intent);
+
 		btn_send = (Button)findViewById(R.id.btn_send);
 		edit_msg = (EditText)findViewById(R.id.edit_msg);
 
@@ -187,13 +190,17 @@ public class NMapViewer extends NMapActivity {
 				double latitude = ((Globals) getApplication()).getLatitude();
 				double longitude = ((Globals) getApplication()).getLongitude();
 
-
-
 				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 				String name = pref.getString("name", null);
 				String number = "+821041880956";
 				String msg = edit_msg.getText().toString();
 				// 결과 값.
+
+				Log.i("INFO", String.valueOf(latitude));
+				Log.i("INFO", String.valueOf(longitude));
+				Log.i("INFO", name);
+				Log.i("INFO", number);
+				Log.i("INFO", msg);
 				sendMessage(number,longitude,latitude,name,msg);
 			}
 		});
@@ -206,7 +213,7 @@ public class NMapViewer extends NMapActivity {
 
 
 		//로그인 시도
-		String login = login(mphoneNum,mtoken,maccessToken,null,"http://unition.herokuapp.com/login");
+		final String login = login(mphoneNum,mtoken,maccessToken,null,"http://unition.herokuapp.com/login");
 
 
 		if(login.equals("Fail")){
@@ -227,7 +234,8 @@ public class NMapViewer extends NMapActivity {
 					editor.putString("name", value);
 					editor.commit();
 
-					login(mphoneNum,mtoken,maccessToken,value,"http://unition.herokuapp.com/user");
+
+					login(mphoneNum, mtoken, maccessToken, value, "http://unition.herokuapp.com/user");
 					// Do something with value!
 				}
 			});
@@ -1155,8 +1163,4 @@ public class NMapViewer extends NMapActivity {
 			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		}
 	}
-
-
-
-
 }
