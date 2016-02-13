@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nhn.android.naverlogin.OAuthLogin;
@@ -19,22 +18,15 @@ import com.nhn.android.naverlogin.OAuthLoginDefine;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 
-/// 네이버 아이디로 로그인 샘플앱
-/**
- * <br/> OAuth2.0 인증을 통해 Access Token을 발급받는 예제, 연동해제하는 예제,
- * <br/> 발급된 Token을 활용하여 Get 등의 명령을 수행하는 예제, 네아로 커스터마이징 버튼을 사용하는 예제 등이 포함되어 있다.
- * @author naver
- *
- */
 public class SigninActivity extends Activity{
     private static final String TAG = "OAuthSampleActivity";
 
     /**
      * client 정보를 넣어준다.
      */
-    private static String OAUTH_CLIENT_ID = "jyvqXeaVOVmV";
-    private static String OAUTH_CLIENT_SECRET = "527300A0_COq1_XV33cf";
-    private static String OAUTH_CLIENT_NAME = "네이버 아이디로 로그인";
+    private static String OAUTH_CLIENT_ID = "lu9OUM1sHnRm6FFDzltM";
+    private static String OAUTH_CLIENT_SECRET = "InzEyLwXUa";
+    private static String OAUTH_CLIENT_NAME = "지도위의 편지";
 
 
     private static OAuthLogin mOAuthLoginInstance;
