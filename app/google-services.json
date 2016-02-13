@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_id": "here-a7e75",
+    "project_number": "757175427554",
+    "name": "here"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757175427554:android:35c7d5d90cad4685",
+        "client_id": "android:unithon.here",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "unithon.here"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
