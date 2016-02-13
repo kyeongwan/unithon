@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -90,7 +91,11 @@ public class SigninActivity extends Activity{
     private OAuthLoginHandler mOAuthLoginHandler = new OAuthLoginHandler() {
         @Override
         public void run(boolean success) {
-            nextActivity();
+            if(success == true) {
+                nextActivity();
+            }else{
+                //실패
+            }
         };
     };
 
