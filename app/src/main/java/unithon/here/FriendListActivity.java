@@ -76,28 +76,29 @@ public class FriendListActivity extends AppCompatActivity {
 
             SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
             String name = pref.getString("name", null);
-            String number = "+821041880956";
+            String number = map.get(adapter.getItem(arg2).getTag());
             String msg = intent.getStringExtra("message");
             // 결과 값.
 
             Log.i("INFO", String.valueOf(intent.getDoubleExtra("lat", 0)));
-            Log.i("INFO", String.valueOf(intent.getDoubleExtra("lat", 0)));
+            Log.i("INFO", String.valueOf(intent.getDoubleExtra("lot", 0)));
             Log.i("INFO", name);
             Log.i("INFO", number);
             Log.i("INFO", msg);
-            sendMessage(number,intent.getDoubleExtra("lat", 0),intent.getDoubleExtra("lat", 0),name,msg);
+            sendMessage(number,intent.getStringExtra("lat"),intent.getStringExtra("lot"),name,msg);
+            Toast.makeText(getApplicationContext(), "메시지가 전송되었습니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
     };
 
-    public void sendMessage(String number,double longitude,double latitude,String name,String msg){
+    public void sendMessage(String number,String longitude,String latitude,String name,String msg){
         HTTP_Json json =  new HTTP_Json();
         json.setServerURL("http://unition.herokuapp.com/sendMessage");
         json.execute(sendMsg_Json( number, longitude, latitude, name, msg));
     }
 
 
-    public JSONObject sendMsg_Json(String number,double longitude,double latitude,String name,String msg) {
+    public JSONObject sendMsg_Json(String number,String longitude,String latitude,String name,String msg) {
 
         JSONObject jObj = new JSONObject();
         try {
