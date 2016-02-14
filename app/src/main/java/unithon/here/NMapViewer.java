@@ -194,18 +194,12 @@ public class NMapViewer extends NMapActivity {
 				double latitude = ((Globals) getApplication()).getLatitude();
 				double longitude = ((Globals) getApplication()).getLongitude();
 
-				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-				String name = pref.getString("name", null);
-				String number = "+821041880956";
-				String msg = edit_msg.getText().toString();
-				// 결과 값.
 
-				Log.i("INFO", String.valueOf(latitude));
-				Log.i("INFO", String.valueOf(longitude));
-				Log.i("INFO", name);
-				Log.i("INFO", number);
-				Log.i("INFO", msg);
-				sendMessage(number,longitude,latitude,name,msg);
+				Intent intent = new Intent(NMapViewer.this, FriendListActivity.class);
+				intent.putExtra("message", edit_msg.getText().toString());
+				intent.putExtra("lot", longitude);
+				intent.putExtra("lat", latitude);
+				startActivity(intent);
 			}
 		});
 
@@ -252,7 +246,6 @@ public class NMapViewer extends NMapActivity {
 		HTTP_Json json =  new HTTP_Json();
 		json.setServerURL("http://unition.herokuapp.com/sendMessage");
 		json.execute(sendMsg_Json( number, longitude, latitude, name, msg));
-
 	}
 
 	public JSONObject sendMsg_Json(String number,double longitude,double latitude,String name,String msg) {

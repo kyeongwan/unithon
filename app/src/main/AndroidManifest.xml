@@ -98,6 +98,8 @@
             android:label="@string/title_activity_find_friend" >
         </activity>
 
+        <activity android:name=".FriendListActivity"/>
+
         <activity android:name=".SigninActivity"/>
         <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
