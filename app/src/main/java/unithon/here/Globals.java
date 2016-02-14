@@ -5,6 +5,7 @@ import android.app.Application;
 public class Globals extends Application {
 	private double latitude;
 	private double longitude;
+	private int msg_count;
 
 	public double getLatitude() {
 		return this.latitude;
@@ -21,4 +22,13 @@ public class Globals extends Application {
 	public void setLongitude(double longi) {
 		this.longitude = longi;
 	}
+
+	public void setMsg_count(){
+		this.msg_count++;
+	}
+
+	public int getMsg_count(){
+		return this.msg_count;
+	}
+
 }

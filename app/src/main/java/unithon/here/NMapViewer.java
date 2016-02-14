@@ -182,7 +182,7 @@ public class NMapViewer extends NMapActivity {
 		Intent intent = new Intent(this, GPSService.class);
 		startService(intent);
 
-		testPOIdataOverlay();
+//		testPOIdataOverlay();
 
 
 		btn_send = (Button)findViewById(R.id.btn_send);
@@ -307,6 +307,11 @@ public class NMapViewer extends NMapActivity {
 		startActivity(intent);
 	}
 
+	public void button_send(View v){
+		//친구 목록 보여주는 곳으로
+		//intent 값과 함께!
+	}
+
 
 
 	@Override
@@ -317,6 +322,7 @@ public class NMapViewer extends NMapActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		testPOIdataOverlay();
 	}
 
 	@Override
@@ -468,20 +474,20 @@ public class NMapViewer extends NMapActivity {
 
 		// Markers for POI item
 		int markerId = NMapPOIflagType.PIN;
-		
+
 
 		// set POI data
 		NMapPOIdata poiData = new NMapPOIdata(3, mMapViewerResourceProvider);
 		poiData.beginPOIdata(3);
 		NMapPOIitem item = poiData.addPOIitem(127.0630205, 37.5091300, "Pizza1 777-111", markerId, 0);
 		item.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
-		NMapPOIitem item2 = poiData.addPOIitem(127.0430205, 37.6095300, "Pizza2 123-456", markerId, 0);
+		NMapPOIitem item2 = poiData.addPOIitem(127.0439806, 37.5102032, "Pizza2 123-456", markerId, 0);
 		item2.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
 		NMapPOIitem item3 = poiData.addPOIitem(127.0230205, 37.7095300, "Pizza3", markerId, 0);
 		item3.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
 		poiData.endPOIdata();
 
-
+		NMapPOIitem sd[];
 
 		// create POI data overlay
 		NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
@@ -707,6 +713,44 @@ public class NMapViewer extends NMapActivity {
 
 	};
 
+
+	public void intentFunction(){
+		Intent intent = new Intent(this, ResponseActivity.class);
+		startActivity(intent);
+	}
+
+
+
+
+	public double calDistance(double lat1, double lon1, double lat2, double lon2){
+
+		double theta, dist;
+		theta = lon1 - lon2;
+		dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1))
+				* Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+		dist = Math.acos(dist);
+		dist = rad2deg(dist);
+
+		dist = dist * 60 * 1.1515;
+		dist = dist * 1.609344;    // 단위 mile 에서 km 변환.
+		dist = dist * 1000.0;      // 단위  km 에서 m 로 변환
+
+		return dist;
+	}
+
+	// 주어진 도(degree) 값을 라디언으로 변환
+	private double deg2rad(double deg){
+		return (double)(deg * Math.PI / (double)180d);
+	}
+
+	// 주어진 라디언(radian) 값을 도(degree) 값으로 변환
+	private double rad2deg(double rad){
+		return (double)(rad * (double)180d / Math.PI);
+	}
+
+
+
+
 	/* POI data State Change Listener*/
 	private final NMapPOIdataOverlay.OnStateChangeListener onPOIdataStateChangeListener = new NMapPOIdataOverlay.OnStateChangeListener() {
 
@@ -716,10 +760,39 @@ public class NMapViewer extends NMapActivity {
 				Log.i(LOG_TAG, "onCalloutClick: title=" + item.getTitle());
 			}
 
+			double max_distance = 50;
+			double distance = 0.0;
+
+
+
+			double lat1 = mMapLocationManager.getMyLocation().getLatitude();
+			double lon1 = mMapLocationManager.getMyLocation().getLongitude();
+			double lat2 = item.getPoint().getLatitude();
+			double lon2 = item.getPoint().getLongitude();
+
+			distance = calDistance(lat1, lon1, lat2, lon2);
+
+			Toast.makeText(NMapViewer.this, "distance: " + distance, Toast.LENGTH_LONG).show();
+
+			if(distance <= max_distance){
+
+				intentFunction();
+			}
+			else{
+				Toast.makeText(NMapViewer.this, "메시지를 볼 수 없습니다\n 더 가까이 가세요", Toast.LENGTH_LONG).show();
+			}
 			// [[TEMP]] handle a click event of the callout
-			Toast.makeText(NMapViewer.this, "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
-			//메시지 보기
-			
+//			Toast.makeText(NMapViewer.this, "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
+			//메시지 정보 확인
+	//		Toast.makeText(NMapViewer.this, "경도 : " + item.getPoint().getLatitude(), Toast.LENGTH_LONG).show();
+	//		item.getPoint().getLatitude();
+	//		item.getPoint().getLongitude();
+
+
+			Toast.makeText(NMapViewer.this, "현재 경도 : " + mMapLocationManager.getMyLocation().getLatitude(), Toast.LENGTH_LONG).show();
+	//		mMapLocationManager.getMyLocation();
+
+
 		}
 
 		@Override
