@@ -80,8 +80,8 @@ public class FriendListActivity extends AppCompatActivity {
             String msg = intent.getStringExtra("message");
             // 결과 값.
 
-            Log.i("INFO", String.valueOf(intent.getDoubleExtra("lat", 0)));
-            Log.i("INFO", String.valueOf(intent.getDoubleExtra("lot", 0)));
+            Log.i("INFO", String.valueOf(intent.getStringExtra("lat")));
+            Log.i("INFO", String.valueOf(intent.getStringExtra("lot")));
             Log.i("INFO", name);
             Log.i("INFO", number);
             Log.i("INFO", msg);
