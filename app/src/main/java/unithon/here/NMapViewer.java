@@ -176,12 +176,11 @@ public class NMapViewer extends NMapActivity {
 		mMyLocationOverlay = mOverlayManager.createMyLocationOverlay(mMapLocationManager, mMapCompassManager);
 
 
-		startMyLocation();
-
 
 		Intent intent = new Intent(this, GPSService.class);
 		startService(intent);
 
+//		startMyLocation();
 //		testPOIdataOverlay();
 
 
@@ -316,6 +315,7 @@ public class NMapViewer extends NMapActivity {
 	protected void onResume() {
 		super.onResume();
 		testPOIdataOverlay();
+		startMyLocation();
 	}
 
 	@Override
@@ -560,10 +560,6 @@ public class NMapViewer extends NMapActivity {
 	};
 
 
-	double current_latitude = 0.0;
-	double current_longitude = 0.0;
-
-
 	/* MyLocation Listener */
 	private final NMapLocationManager.OnLocationChangeListener onMyLocationChangeListener = new NMapLocationManager.OnLocationChangeListener() {
 
@@ -573,12 +569,6 @@ public class NMapViewer extends NMapActivity {
 			if (mMapController != null) {
 				mMapController.animateTo(myLocation);
 
-
-				current_latitude = myLocation.getLatitude();
-				current_longitude = myLocation.getLongitude();
-
-				//현재 위치로 이동할 때 같이 출력해주기
-	//			Toast.makeText(NMapViewer.this, "현재 위치로 이동: 위도:" + myLocation.getLatitude() + ",경도 " + myLocation.getLongitude(), Toast.LENGTH_LONG).show();
 			}
 
 			return true;
@@ -756,36 +746,26 @@ public class NMapViewer extends NMapActivity {
 			double max_distance = 50;
 			double distance = 0.0;
 
+			try {
+				double lat1 = mMapLocationManager.getMyLocation().getLatitude();
+				double lon1 = mMapLocationManager.getMyLocation().getLongitude();
+				double lat2 = item.getPoint().getLatitude();
+				double lon2 = item.getPoint().getLongitude();
+
+				distance = calDistance(lat1, lon1, lat2, lon2);
 
 
-			double lat1 = mMapLocationManager.getMyLocation().getLatitude();
-			double lon1 = mMapLocationManager.getMyLocation().getLongitude();
-			double lat2 = item.getPoint().getLatitude();
-			double lon2 = item.getPoint().getLongitude();
-
-			distance = calDistance(lat1, lon1, lat2, lon2);
-
-			Toast.makeText(NMapViewer.this, "distance: " + distance, Toast.LENGTH_LONG).show();
-
-			if(distance <= max_distance){
-
-				intentFunction();
-			}
-			else{
-				Toast.makeText(NMapViewer.this, "메시지를 볼 수 없습니다\n 더 가까이 가세요", Toast.LENGTH_LONG).show();
-			}
-			// [[TEMP]] handle a click event of the callout
-//			Toast.makeText(NMapViewer.this, "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
-			//메시지 정보 확인
-	//		Toast.makeText(NMapViewer.this, "경도 : " + item.getPoint().getLatitude(), Toast.LENGTH_LONG).show();
-	//		item.getPoint().getLatitude();
-	//		item.getPoint().getLongitude();
+				Toast.makeText(NMapViewer.this, "현재 위도 : " + lat1, Toast.LENGTH_LONG).show();
 
 
-			Toast.makeText(NMapViewer.this, "현재 경도 : " + mMapLocationManager.getMyLocation().getLatitude(), Toast.LENGTH_LONG).show();
-	//		mMapLocationManager.getMyLocation();
+				if (distance <= max_distance) {
 
-
+					intentFunction();
+				} else {
+					Toast.makeText(NMapViewer.this, "메시지를 볼 수 없습니다\n 더 가까이 가세요", Toast.LENGTH_LONG).show();
+				}
+			}catch(Exception e)
+			{Toast.makeText(NMapViewer.this, "현재 위도 XXXX", Toast.LENGTH_LONG).show();}
 		}
 
 		@Override
