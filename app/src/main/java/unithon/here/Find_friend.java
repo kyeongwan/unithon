@@ -90,8 +90,8 @@ public class Find_friend extends Activity {
 			//DB insert
 
 			Toast.makeText(getApplicationContext(), adapter.getItem(arg2).getTag() + "" + edit_number.getText(), Toast.LENGTH_SHORT).show();
-			String query = String.format("INSERT INTO app_info (phoneNumber, userName) VALUES ('%s', '%s')", adapter.getItem(arg2).getTag(), edit_number.getText());
-			DBManager.getInstance().write(query);
+			String query = String.format("INSERT INTO friend (phoneNumber, userName) VALUES ('%s', '%s')", adapter.getItem(arg2).getTag(), edit_number.getText());
+			DBManager.getInstance(getApplicationContext(), "Here.db", null, 1).write(query);
 
 
 
