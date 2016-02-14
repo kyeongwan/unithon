@@ -196,8 +196,8 @@ public class NMapViewer extends NMapActivity {
 
 				Intent intent = new Intent(NMapViewer.this, FriendListActivity.class);
 				intent.putExtra("message", edit_msg.getText().toString());
-				intent.putExtra("lot", longitude);
-				intent.putExtra("lat", latitude);
+				intent.putExtra("lot", longitude+"");
+				intent.putExtra("lat", latitude+"");
 				startActivity(intent);
 			}
 		});
