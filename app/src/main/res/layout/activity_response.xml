@@ -16,6 +16,8 @@
             android:layout_width="30dp"
             android:layout_height="17dp"
             android:layout_alignParentLeft="true"
+            android:id="@+id/btn_back"
+            android:onClick="goBack"
             android:layout_marginTop="10dp"
             android:background="@drawable/back"/>
 
@@ -75,5 +77,5 @@
             android:layout_margin="2dp" />
 
     </LinearLayout>
-    
+
     </RelativeLayout>
