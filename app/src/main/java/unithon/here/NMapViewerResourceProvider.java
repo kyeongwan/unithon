@@ -24,11 +24,15 @@ import com.nhn.android.maps.NMapOverlayItem;
 import com.nhn.android.maps.overlay.NMapPOIitem;
 import com.nhn.android.mapviewer.overlay.NMapResourceProvider;
 
+import java.util.HashMap;
+
 /**
  * Wrapper class to provider resources on map view.
  * 
  * @author kyjkim
  */
+
+
 public class NMapViewerResourceProvider extends NMapResourceProvider implements
 	NMapCalloutCustomOldOverlay.ResourceProvider {
 	private static final String LOG_TAG = "NMapViewerResourceProvider";
@@ -50,6 +54,8 @@ public class NMapViewerResourceProvider extends NMapResourceProvider implements
 
 	private final Rect mTempRect = new Rect();
 	private final Paint mTextPaint = new Paint();
+
+
 
 	public NMapViewerResourceProvider(Context context) {
 		super(context);
