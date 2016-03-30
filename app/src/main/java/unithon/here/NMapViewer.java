@@ -60,6 +60,8 @@ import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -114,10 +116,33 @@ public class NMapViewer extends NMapActivity {
 	EditText edit_msg;
 	private static boolean USE_XML_LAYOUT = true;
 
+
+	//쪽지 정보를 담을 리스트
+	List<MessageList> msgList;
+
+
+	// set POI data
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		msgList = new ArrayList<>();
+
+
+		msgList.add(new MessageList(127.0630205, 37.5091300, "이동빈","안녕하세요. 반갑습니다.","하하하하하"));
+		msgList.add(new MessageList(127.0439806,37.5102032,"박윤초","안녕하세요1. 반갑습니다.","하하하하하"));
+		msgList.add(new MessageList(127.0230205,37.7095300,"사랑해","안녕하세요2. 반갑습니다.","하하하하하"));
+		msgList.add(new MessageList(127.0330205,37.7095300,"많이 접어","안녕하세요3. 반갑습니다.","하하하하하"));
+		msgList.add(new MessageList(127.0350205,37.6095300,"고이","안녕하세요4. 반갑습니다.","하하하하하"));
+		msgList.add(new MessageList(127.0330205,37.4095300,"접어","안녕하세요5. 반갑습니다.","하하하하하"));
+		msgList.add(new MessageList(127.0380205,37.4595300,"고이","안녕하세요6. 반갑습니다.","하하하하하"));
+		msgList.add(new MessageList(127.0330205,37.4095300,"접어","안녕하세요7. 반갑습니다.","하하하하하"));
+		msgList.add(new MessageList(127.0370205,37.2095300,"고이","안녕하세요8. 반갑습니다.","하하하하하"));
+		msgList.add(new MessageList(127.0380205,37.1095300,"접어","안녕하세요9. 반갑습니다.","하하하하하"));
+		msgList.add(new MessageList(127.0492349,37.5551782,"이동빈","윤초야 안녕? 우리 첫만남 기억나니? \n 서로 어색하면서도 풋풋했던 우리 사이\n 내가" +
+				"너를 만난건 태어난 이후로 가장 잘한 일 같아. \n 항상 사랑하고.. 앞으로도 더 많이 사랑해줄게!","하하하하하"));
 
 		if (USE_XML_LAYOUT) {
 			setContentView(R.layout.main);
@@ -181,6 +206,7 @@ public class NMapViewer extends NMapActivity {
 		startService(intent);
 
 //		startMyLocation();
+
 //		testPOIdataOverlay();
 
 
@@ -463,21 +489,49 @@ public class NMapViewer extends NMapActivity {
 //
 //	}
 
+	//쪽지를 담는 클래스
+	public class MessageList{
+
+		private double mlot;
+		private double mlat;
+		private String mUser;
+		private String mMsg;
+		private String mMsg1;
+
+		MessageList(double lot, double lat, String user, String msg, String msg1) {
+			this.mlot = lot;
+			this.mlat = lat;
+			this.mUser = user;
+			this.mMsg = msg;
+			this.mMsg1 = msg1;
+		}
+	}
+
+
+	//맵에 쪽지 찍기
 	private void testPOIdataOverlay() {
 
 		// Markers for POI item
 		int markerId = NMapPOIflagType.PIN;
 
-
 		// set POI data
-		NMapPOIdata poiData = new NMapPOIdata(3, mMapViewerResourceProvider);
-		poiData.beginPOIdata(3);
-		NMapPOIitem item = poiData.addPOIitem(127.0630205, 37.5091300, "Pizza1 777-111", markerId, 0);
-		item.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
-		NMapPOIitem item2 = poiData.addPOIitem(127.0439806, 37.5102032, "Pizza2 123-456", markerId, 0);
-		item2.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
-		NMapPOIitem item3 = poiData.addPOIitem(127.0230205, 37.7095300, "Pizza3", markerId, 0);
-		item3.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
+		NMapPOIdata poiData = new NMapPOIdata(msgList.size(), mMapViewerResourceProvider);
+		poiData.beginPOIdata(msgList.size());
+
+		NMapPOIitem msgitem[] = new NMapPOIitem[msgList.size()];
+
+		for(int i=0;i<msgList.size();i++){
+			Object obj;
+			Object obj1;
+			obj = msgList.get(i).mMsg;
+			msgitem[i] = poiData.addPOIitem(msgList.get(i).mlot, msgList.get(i).mlat,"쪽지 확인",markerId,msgList.get(i),0);
+			//msgitem[i].setHeadText(msgList.get(i).mMsg);
+			//msgitem[i].setTailText(msgList.get(i).mUser);
+			msgitem[i].setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
+		}
+
+
+
 		poiData.endPOIdata();
 
 		NMapPOIitem sd[];
@@ -697,8 +751,10 @@ public class NMapViewer extends NMapActivity {
 	};
 
 
-	public void intentFunction(){
+	public void intentFunction(String user, String msg){
 		Intent intent = new Intent(this, ResponseActivity.class);
+		intent.putExtra("userName",user);
+		intent.putExtra("Msg",msg);
 		startActivity(intent);
 	}
 
@@ -755,14 +811,13 @@ public class NMapViewer extends NMapActivity {
 				distance = calDistance(lat1, lon1, lat2, lon2);
 
 
-				Toast.makeText(NMapViewer.this, "현재 위도 : " + lat1, Toast.LENGTH_LONG).show();
+				MessageList msg = (MessageList)item.getTag();
 
 
 				if (distance <= max_distance) {
-
-					intentFunction();
+					intentFunction(msg.mUser,msg.mMsg);
 				} else {
-					Toast.makeText(NMapViewer.this, "메시지를 볼 수 없습니다\n 더 가까이 가세요", Toast.LENGTH_LONG).show();
+					Toast.makeText(NMapViewer.this, "메시지를 볼 수 없습니다\n 더 가까이 가주세요~", Toast.LENGTH_LONG).show();
 				}
 			}catch(Exception e)
 			{Toast.makeText(NMapViewer.this, "현재 위도 XXXX", Toast.LENGTH_LONG).show();}
