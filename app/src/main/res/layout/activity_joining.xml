@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/loginbg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@mipmap/makedesign" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_margin="20dp" >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="1dp"
+            android:inputType="textPersonName"
+            android:hint="이름"
+            android:textSize="15dp"
+            android:paddingStart="20dp"
+            android:ems="10"
+            android:background="@mipmap/box2"
+            android:id="@+id/edit_name" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="1dp"
+            android:inputType="textEmailAddress"
+            android:hint="이메일"
+            android:paddingStart="20dp"
+            android:ems="10"
+            android:background="@mipmap/box2"
+            android:id="@+id/edit_email" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="1dp"
+            android:inputType="numberPassword"
+            android:hint="비밀번호"
+            android:paddingStart="20dp"
+            android:ems="10"
+            android:background="@mipmap/box2"
+            android:id="@+id/edit_pw" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="textPassword"
+            android:hint="비밀번호 재확인"
+            android:paddingStart="20dp"
+            android:ems="10"
+            android:background="@mipmap/box2"
+            android:id="@+id/edit_pw_again" />
+    </LinearLayout>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingStart="20dp"
+        android:inputType="phone"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:id="@+id/edit_join_phone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="25dp"
+        android:text="고이접어 서비스를 이용하시려면 GPS를 켜야합니다."
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"/>
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="35dp"
+        android:id="@+id/btn_join"
+        android:onClick="joinClick"
+        android:background="@mipmap/joinok"
+        android:layout_gravity="center" />
+
+</LinearLayout>

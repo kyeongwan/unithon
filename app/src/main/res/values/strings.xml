@@ -5,4 +5,7 @@
     <string name="action_settings">친구 찾기</string>
     <string name="title_activity_gpsservice">GPSService</string>
     <string name="title_activity_find_friend">친구 검색</string>
+    <string name="agreement1">이용약관, 개인정보 수집 및 이용, \n위치정보 이용약관에 모두 동의합니다.</string>
+    <string name="agreement2">개인정보 수집 및 이용에 대한 안내(필수)</string>
+    <string name="agreement3">개인정보 수집 및 이용에 대한 안내(필수)</string>
 </resources>

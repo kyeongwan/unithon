@@ -8,12 +8,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginDefine;
@@ -34,8 +34,9 @@ public class SigninActivity extends Activity{
     private static OAuthLogin mOAuthLoginInstance;
     private static Context mContext;
 
-
     private OAuthLoginButton mOAuthLoginButton;
+    private Button btnLogin;
+    private TextView textViewgotoJoining;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,13 +47,25 @@ public class SigninActivity extends Activity{
 
         mContext = this;
 
+        btnLogin = (Button)findViewById(R.id.btn_login);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(SigninActivity.this, MainActivity.class);
+//                startActivity(intent);
+                nextActivity();
+            }
+        });
 
-        initData();
-        initView();
-
-        this.setTitle("OAuthLoginSample Ver." + OAuthLogin.getVersion());
+        textViewgotoJoining = (TextView)findViewById(R.id.didyoujoin);
+        textViewgotoJoining.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SigninActivity.this, AgreementActivity.class);
+                startActivity(intent);
+            }
+        });
     }
-
 
     private void initData() {
         mOAuthLoginInstance = OAuthLogin.getInstance();
@@ -65,12 +78,12 @@ public class SigninActivity extends Activity{
         //mOAuthLoginInstance.init(mContext, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME, OAUTH_callback_intent_url);
     }
 
-    private void initView() {
-
-        mOAuthLoginButton = (OAuthLoginButton) findViewById(R.id.buttonOAuthLoginImg);
-        mOAuthLoginButton.setOAuthLoginHandler(mOAuthLoginHandler);
-
-    }
+//    private void initView() {
+//
+//        mOAuthLoginButton = (OAuthLoginButton) findViewById(R.id.buttonOAuthLoginImg);
+//        mOAuthLoginButton.setOAuthLoginHandler(mOAuthLoginHandler);
+//
+//    }
 
 
     private void nextActivity(){
@@ -98,36 +111,6 @@ public class SigninActivity extends Activity{
             }
         };
     };
-
-    public void onButtonClick(View v) throws Throwable {
-
-//        switch (v.getId()) {
-//            case R.id.buttonOAuth: {
-//                mOAuthLoginInstance.startOauthLoginActivity(MainActivity.this, mOAuthLoginHandler);
-//                break;
-//            }
-//            case R.id.buttonVerifier: {
-//                new RequestApiTask().execute();
-//                break;
-//            }
-//            case R.id.buttonRefresh: {
-//                new RefreshTokenTask().execute();
-//                break;
-//            }
-//            case R.id.buttonOAuthLogout: {
-//                mOAuthLoginInstance.logout(mContext);
-//                updateView();
-//                break;
-//            }
-//            case R.id.buttonOAuthDeleteToken: {
-//                new DeleteTokenTask().execute();
-//                break;
-//            }
-//            default:
-//                break;
-//        }
-    }
-
 
     private class DeleteTokenTask extends AsyncTask<Void, Void, Void> {
         @Override

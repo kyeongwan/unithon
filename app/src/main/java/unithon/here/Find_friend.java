@@ -30,6 +30,7 @@ public class Find_friend extends Activity {
 	SampleAdapter adapter;
 	ListView m_ListView;
 	ImageView image;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

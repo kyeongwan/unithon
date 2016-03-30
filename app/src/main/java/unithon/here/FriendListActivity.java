@@ -39,6 +39,7 @@ public class FriendListActivity extends AppCompatActivity {
     public void onCreate(Bundle saved){
         super.onCreate(saved);
         setContentView(R.layout.activity_friend_list);
+        setTitle("친구목록");
 
         intent = getIntent();
 

@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TelephonyManager telManager = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
         mphoneNum = telManager.getLine1Number();
