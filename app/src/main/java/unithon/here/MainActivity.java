@@ -74,30 +74,7 @@ public class MainActivity extends AppCompatActivity {
         mtoken = pref.getString("gcmtoken", null);
 
 
-        //로그인 시도
-        String login = login(mphoneNum,mtoken,maccessToken,null,"http://unition.herokuapp.com/login");
 
-
-        if(login.equals("Fail")){
-            //이름 입력 창
-
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("설정");
-            alert.setMessage("이름을 입력해주세요.");
-
-            // Set an EditText view to get user input
-            final EditText input = new EditText(this);
-            alert.setView(input);
-            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    String value = input.getText().toString();
-                    login(mphoneNum,mtoken,maccessToken,value,"http://unition.herokuapp.com/user");
-                    // Do something with value!
-                }
-            });
-            alert.show();
-
-        }
 
         setSupportActionBar(toolbar);
         // 주석
@@ -109,41 +86,10 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
         //로그아웃
       //  OAuthLogin.getInstance().logout(getApplicationContext());
 
     }
-
-    public String login(String phoneNum,String gcmtoken,String NaccessToken, String name, String url){
-        HTTP_Json json = new HTTP_Json();
-        json.setServerURL(url);
-        json.execute(fisrt_login_Json(phoneNum,gcmtoken,NaccessToken,name ));
-        String request = null;
-        try {
-            request = json.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        return request;
-    }
-
-    public JSONObject fisrt_login_Json(String phoneNum,String gcmtoken,String naveraccessToken, String name) {
-
-        JSONObject jObj = new JSONObject();
-        try {
-            jObj.put("phoneNumber", phoneNum);
-            jObj.put("gcmReg", gcmtoken);
-            jObj.put("nToken", naveraccessToken);
-            jObj.put("userName", name);
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
-        return jObj;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

@@ -216,14 +216,10 @@ public class NMapViewer extends NMapActivity {
 		btn_send.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				double latitude = ((Globals) getApplication()).getLatitude();
-				double longitude = ((Globals) getApplication()).getLongitude();
 
 
 				Intent intent = new Intent(NMapViewer.this, FriendListActivity.class);
 				intent.putExtra("message", edit_msg.getText().toString());
-				intent.putExtra("lot", longitude+"");
-				intent.putExtra("lat", latitude+"");
 				startActivity(intent);
 			}
 		});
@@ -236,42 +232,10 @@ public class NMapViewer extends NMapActivity {
 
 
 		//로그인 시도
-		final String login = login(mphoneNum,mtoken,maccessToken,null,"http://unition.herokuapp.com/login");
 
-
-		if(login.equals("Fail")){
-			//이름 입력 창
-
-			AlertDialog.Builder alert = new AlertDialog.Builder(this);
-			alert.setTitle("설정");
-			alert.setMessage("이름을 입력해주세요.");
-
-			// Set an EditText view to get user input
-			final EditText input = new EditText(this);
-			alert.setView(input);
-			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					String value = input.getText().toString();
-					SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-					SharedPreferences.Editor editor = pref.edit();
-					editor.putString("name", value);
-					editor.commit();
-
-
-					login(mphoneNum, mtoken, maccessToken, value, "http://unition.herokuapp.com/user");
-					// Do something with value!
-				}
-			});
-			alert.show();
-
-		}
 	}
 
-	public void sendMessage(String number,double longitude,double latitude,String name,String msg){
-		HTTP_Json json =  new HTTP_Json();
-		json.setServerURL("http://unition.herokuapp.com/sendMessage");
-		json.execute(sendMsg_Json( number, longitude, latitude, name, msg));
-	}
+
 
 	public JSONObject sendMsg_Json(String number,double longitude,double latitude,String name,String msg) {
 
@@ -286,20 +250,6 @@ public class NMapViewer extends NMapActivity {
 			e1.printStackTrace();
 		}
 		return jObj;
-	}
-	public String login(String phoneNum,String gcmtoken,String NaccessToken, String name, String url){
-		HTTP_Json json = new HTTP_Json();
-		json.setServerURL(url);
-		json.execute(fisrt_login_Json(phoneNum,gcmtoken,NaccessToken,name ));
-		String request = null;
-		try {
-			request = json.get();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-		return request;
 	}
 
 	public JSONObject fisrt_login_Json(String phoneNum,String gcmtoken,String naveraccessToken, String name) {

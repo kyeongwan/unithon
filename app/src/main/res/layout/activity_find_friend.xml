@@ -81,6 +81,15 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/btn_find"
         >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="ex) abc@gmail.com\n       010-1234-5678"
+            android:id="@+id/textView5" />
+
         <ListView
             android:layout_width="match_parent"
             android:layout_height="90dp"

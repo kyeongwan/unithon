@@ -50,7 +50,7 @@ public class FriendListActivity extends AppCompatActivity {
             @Override
             public void onSelect(Cursor cursor) {
                 Log.i("cursor", cursor.getString(0));
-                adapter.add(new SampleItem(cursor.getString(0), android.R.drawable.ic_menu_search));
+                adapter.add(new SampleItem(cursor.getString(0),cursor.getString(1),android.R.drawable.ic_menu_search));
                 map.put(cursor.getString(0), cursor.getString(1));
             }
 
@@ -76,27 +76,29 @@ public class FriendListActivity extends AppCompatActivity {
 
 
             SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-            String name = pref.getString("name", null);
-            String number = map.get(adapter.getItem(arg2).getTag());
-            String msg = intent.getStringExtra("message");
-            // 결과 값.
+            String name = pref.getString("name", null);//발신 이름
 
-            Log.i("INFO", String.valueOf(intent.getStringExtra("lat")));
-            Log.i("INFO", String.valueOf(intent.getStringExtra("lot")));
+            String latitude = String.valueOf(((Globals) getApplication()).getLongitude()); //위도
+            String longitude = String.valueOf(((Globals) getApplication()).getLongitude()); //경도
+
+            String toName = map.get(adapter.getItem(arg2).getName()); // 수신 이름
+            String email = map.get(adapter.getItem(arg2).getEmail()); // 수신 이메일
+            String msg = intent.getStringExtra("message"); //메시지
+
+
+            // 결과 값.
             Log.i("INFO", name);
-            Log.i("INFO", number);
+            Log.i("INFO", latitude);
+            Log.i("INFO", longitude);
+            Log.i("INFO", toName);
+            Log.i("INFO", email);
             Log.i("INFO", msg);
-            sendMessage(number,intent.getStringExtra("lat"),intent.getStringExtra("lot"),name,msg);
             Toast.makeText(getApplicationContext(), "메시지가 전송되었습니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
     };
 
-    public void sendMessage(String number,String longitude,String latitude,String name,String msg){
-        HTTP_Json json =  new HTTP_Json();
-        json.setServerURL("http://unition.herokuapp.com/sendMessage");
-        json.execute(sendMsg_Json( number, longitude, latitude, name, msg));
-    }
+
 
 
     public JSONObject sendMsg_Json(String number,String longitude,String latitude,String name,String msg) {
@@ -116,16 +118,22 @@ public class FriendListActivity extends AppCompatActivity {
 
 
     private class SampleItem {
-        public String tag;
-        public int iconRes;
+        private String email;
+        private String name;
+        private int iconRes;
 
-        public SampleItem(String tag, int iconRes) {
-            this.tag = tag;
+        public SampleItem(String email, String name, int iconRes) {
+            this.email = email;
+            this.name = name;
             this.iconRes = iconRes;
         }
 
-        public String getTag(){
-            return tag;
+        public String getEmail() {
+            return this.email;
+        }
+
+        public String getName() {
+            return this.name;
         }
     }
 
@@ -142,7 +150,7 @@ public class FriendListActivity extends AppCompatActivity {
             ImageView icon = (ImageView) convertView.findViewById(R.id.row_icon);
             icon.setImageResource(getItem(position).iconRes);
             TextView title = (TextView) convertView.findViewById(R.id.row_title);
-            title.setText(getItem(position).tag);
+            title.setText(getItem(position).getName());
 
             return convertView;
         }
